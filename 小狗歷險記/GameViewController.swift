@@ -9,8 +9,12 @@
 import UIKit
 import SpriteKit
 
+
+
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var imageSmallDog: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +37,7 @@ class GameViewController: UIViewController {
     override func shouldAutorotate() -> Bool {
         return true
     }
+    
 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
