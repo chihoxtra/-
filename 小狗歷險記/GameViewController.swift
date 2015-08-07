@@ -9,16 +9,23 @@
 import UIKit
 import SpriteKit
 
-
-
 class GameViewController: UIViewController {
 
+    var currentGame: GameScene!
+    
     @IBOutlet weak var imageSmallDog: UIImageView!
+    
+    @IBOutlet weak var labelScore: UILabel!
+    
+    func updateScore(s: Int) {
+        labelScore.text = "分數: " + String(s)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if let scene = GameScene(fileNamed:"GameScene") {
+            
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -31,6 +38,11 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
+            /* Game Scene will be run after the presentation */
+            
+            currentGame = scene
+            scene.viewController = self
+            
         }
     }
 

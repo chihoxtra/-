@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E4968981B70ADD400E34E94 /* lo in Resources */ = {isa = PBXBuildFile; fileRef = 7E4968971B70ADD400E34E94 /* lo */; };
-		7E5259D51B74A0FA00478C41 /* banana in Resources */ = {isa = PBXBuildFile; fileRef = 7E5259D41B74A0FA00478C41 /* banana */; };
+		7E5259D71B74A2D900478C41 /* bananas in Resources */ = {isa = PBXBuildFile; fileRef = 7E5259D61B74A2D900478C41 /* bananas */; };
 		7EE506C61B6E2562006FB635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE506C51B6E2562006FB635 /* AppDelegate.swift */; };
 		7EE506C81B6E2562006FB635 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506C71B6E2562006FB635 /* GameScene.sks */; };
 		7EE506CA1B6E2562006FB635 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE506C91B6E2562006FB635 /* GameScene.swift */; };
@@ -23,7 +23,7 @@
 
 /* Begin PBXFileReference section */
 		7E4968971B70ADD400E34E94 /* lo */ = {isa = PBXFileReference; lastKnownFileType = file; path = lo; sourceTree = "<group>"; };
-		7E5259D41B74A0FA00478C41 /* banana */ = {isa = PBXFileReference; lastKnownFileType = file; path = banana; sourceTree = "<group>"; };
+		7E5259D61B74A2D900478C41 /* bananas */ = {isa = PBXFileReference; lastKnownFileType = file; path = bananas; sourceTree = "<group>"; };
 		7EE506C21B6E2562006FB635 /* 小狗歷險記.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "小狗歷險記.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE506C51B6E2562006FB635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EE506C71B6E2562006FB635 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 				7EE506D01B6E2562006FB635 /* Assets.xcassets */,
 				7EE506E31B6F6C50006FB635 /* astroid */,
 				7E4968971B70ADD400E34E94 /* lo */,
-				7E5259D41B74A0FA00478C41 /* banana */,
+				7E5259D61B74A2D900478C41 /* bananas */,
 				7EE506DF1B6E2998006FB635 /* poison */,
 				7EE506DD1B6E2921006FB635 /* smallDog */,
 				7EE506D21B6E2562006FB635 /* LaunchScreen.storyboard */,
@@ -150,7 +150,7 @@
 				7EE506D11B6E2562006FB635 /* Assets.xcassets in Resources */,
 				7EE506CF1B6E2562006FB635 /* Main.storyboard in Resources */,
 				7EE506DE1B6E2921006FB635 /* smallDog in Resources */,
-				7E5259D51B74A0FA00478C41 /* banana in Resources */,
+				7E5259D71B74A2D900478C41 /* bananas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
