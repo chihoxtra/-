@@ -16,10 +16,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="分數：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymt-13-GEz">
+                                <rect key="frame" x="31" y="14" width="107" height="41"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="13" y="10" width="107" height="41"/>
+                                </variation>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="smallDog" translatesAutoresizingMaskIntoConstraints="NO" id="zWG-e4-I1F">
                                 <rect key="frame" x="259" y="359" width="83" height="94"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="165" y="423" width="71" height="78"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="154" y="513" width="71" height="78"/>
                                 </variation>
                             </imageView>
                         </subviews>
@@ -36,7 +48,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="3FK-76-N9S"/>
             </objects>
-            <point key="canvasLocation" x="310.5" y="354"/>
+            <point key="canvasLocation" x="310" y="354"/>
         </scene>
     </scenes>
     <resources>
