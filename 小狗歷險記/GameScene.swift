@@ -8,13 +8,20 @@
 
 import SpriteKit
 
+class GameOverScene: SKScene {
+    
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    var gameStatus: Bool = false
     
     var smallDogSprite: SKSpriteNode!
     
     var objectsArray: [String:UIImage] = [
         "bananas" : UIImage(named: "bananas")!,
+        "cherry" : UIImage(named: "cherry.png")!,
+        "orange" : UIImage(named: "orange.png")!,
         "poison" : UIImage(named: "poison")!,
         "heart" : UIImage(named: "heart.png")!,
         "astroid" : UIImage(named: "astroid")!,
@@ -22,25 +29,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     ]
     
     var objectsWeightArray: [Int] = [
-        1,
         10,
         10,
+        10,
+        2,
         1,
+        5,
         1
     ]
     
-    var objectsNameArray:[String] = ["bananas", "poison", "heart", "astroid", "lo"]
+    var objectsNameArray:[String] = ["bananas", "cherry", "orange", "poison", "heart", "astroid", "lo"]
 
     var newWeighedObjectsArray: [String] = []
     
     // objects generation Interval
-    var generationInterval = 1.5
+    var generationInterval:NSTimeInterval = NSTimeInterval(1.5)
     
     // small dog movement velocity
     var hVel = 250.0
     
     // g for objects to fall
     var gVel = 250.0
+    
+    // gtimer
+    var gtimer = 0.0
+    var spawnMachine : NSTimer = NSTimer()
+    var gameTimer : NSTimer = NSTimer()
     
     // score
     var score: Int = 0
@@ -110,7 +124,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sprite.yScale = 0.3
         sprite.position = CGPoint(x: CGFloat(posX), y: ((self.frame.size.height)-150))
         
-        //let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
         let a = SKAction.moveToY(-100.00, duration: 800/gVel)
         
         
@@ -124,11 +137,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
+        // start the game
+        gameStatus = true
+        
         // enable physics
         self.physicsWorld.contactDelegate = self
 
-        /* set timer */
-        _ = NSTimer.scheduledTimerWithTimeInterval(generationInterval, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
+        /* set timer and objects spawn */
+
+        spawnMachine = NSTimer.scheduledTimerWithTimeInterval(generationInterval, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
+        
+        gameTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
         
         /* Preparing weighted Array */
 
@@ -153,22 +172,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(heartScoreSprite)
         }
         
-//        /* add ground with frame */
-//        let cancelZone = SKNode()
-//        cancelZone.position = CGPointMake(0, 0)
-//        cancelZone.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.frame.width, height: 100.0), center: CGPoint(x: self.frame.midX, y: 0.0))
-//
-//        cancelZone.physicsBody?.dynamic = true //This should be set to true
-//        cancelZone.physicsBody?.affectedByGravity = false
-//        cancelZone.physicsBody?.friction = 1
-//        cancelZone.physicsBody?.categoryBitMask = gameBorderCategory
-//        cancelZone.physicsBody?.contactTestBitMask = objectsCategory
-//        cancelZone.hidden = false
-//        cancelZone.name = "cancelZone"
-//        self.addChild(cancelZone)
 
-        
-        
+
         /* add ground with frame */
         let gameBorder = SKNode()
         gameBorder.position = CGPointMake(0, 0)
@@ -224,6 +229,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func removeSprite (body: SKPhysicsBody) {
+        
+        var tmpNode = SKNode()
+        tmpNode = (body.node)!
+        var tmpNodeArray: [SKNode] = []
+        tmpNodeArray.append(tmpNode)
+        self.removeChildrenInArray(tmpNodeArray)
+        
+    }
+    
+    /* End of Game */
+    func gameEnd() {
+        gameStatus = false
+        
+        spawnMachine.invalidate()
+        gameTimer.invalidate()
+        
+        self.removeAllChildren()
+        self.removeAllActions()
+        viewController.labelDie.hidden = false
+        
+    }
+    
     func didBeginContact(contact: SKPhysicsContact) {
         
         var firstBody: SKPhysicsBody
@@ -262,6 +290,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         var tmpNodeArray: [SKNode] = []
                         tmpNodeArray.append(tmpNode)
                         self.removeChildrenInArray(tmpNodeArray)
+                        
+                        removeSprite (firstBody)
+                        
                         tmpBody1 = firstBody
                     
                         heartLeft--
@@ -270,13 +301,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
 
                 } else if firstBody.node?.name == "lo" {
-                    viewController.labelDie.hidden = false
+                    gameEnd()
 
                 } else if firstBody.node?.name == "heart" {
+                    
+                    removeSprite (firstBody)
+                    
                     addHeart()
                     tmpBody1 = firstBody
                     
-                } else if firstBody.node?.name == "bananas" {
+                } else if (firstBody.node?.name == "bananas") || (firstBody.node?.name == "cherry") || (firstBody.node?.name == "orange") {
+                    
+                    removeSprite (firstBody)
+                    
                     score++
                     viewController!.updateScore(score)
                 }
@@ -285,17 +322,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             } else if secondBody.node?.name == "gameBorder" {
                 if (firstBody.node) != nil {
-                    var tmpNode = SKNode()
-                    tmpNode = (firstBody.node)!
-                    
-                    var tmpNodeArray: [SKNode] = []
-                    tmpNodeArray.append(tmpNode)
-                    self.removeChildrenInArray(tmpNodeArray)
+                    removeSprite (firstBody)
 
             }
             
         }
-        print("小孩數目 ： " + String(self.children.count))
+//        print("小孩數目 ： " + String(self.children.count))
         
         
 //        if firstBody.categoryBitMask==0 && secondBody.categoryBitMask==1 {
@@ -304,9 +336,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
  
         }
     }
+    
+    func updateTimer() {
+        gtimer += 1.0
+        
+        switch gtimer {
+            case 10.0...20.0:
+                gVel = 300.0
+                generationInterval = NSTimeInterval(1.0)
+            case 20.0...30.0:
+                gVel = 350.0
+                generationInterval = NSTimeInterval(0.5)
+            case 30.0...40.0:
+                gVel = 500.0
+                generationInterval = NSTimeInterval(0.2)
+            case 50.0...100.0:
+                gVel = 1000.0
+                generationInterval = NSTimeInterval(0.08)
+            default: break
+            
+
+
+        }
+
+    }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+
 
     }
 }
