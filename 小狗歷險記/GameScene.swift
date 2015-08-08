@@ -16,17 +16,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var astroidArray: [String:UIImage] = [
         "bananas" : UIImage(named: "bananas")!,
         "poison" : UIImage(named: "poison")!,
-        "heart" : UIImage(named: "heart")!,
+        "heart" : UIImage(named: "heart.png")!,
         "astroid" : UIImage(named: "astroid")!,
         "lo" : UIImage(named: "lo")!
     ]
     
+    var astroidWeightArray: [Int] = [
+        10,
+        5,
+        1,
+        5,
+        4
+    ]
     
-    var astroidNameArray:[String] {
-        get{
-            return Array(astroidArray.keys)
-        }
-    }
+    var astroidNameArray:[String] = ["bananas", "poison", "heart", "astroid", "lo"]
+
+    var newWeighedAstriodArray: [String] = []
     
     // objects generation speed
     var fallTempo = 1.0
@@ -34,9 +39,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // score
     var score: Int = 0
     var scoreFlag: Bool = false
+    var totalHeartNumber = 5
+    var heartLeft = 5
+    var heartScoreArray = [SKSpriteNode()]
     
-    // tmp body node
+    // tmp body node, sorry need this to avoid double counting action
     var tmpBody: SKPhysicsBody! = nil
+    var tmpBody1: SKPhysicsBody! = nil
     
     // reference to view controller to access items (like images) there
     weak var viewController: GameViewController!
@@ -47,15 +56,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let smallDogCategory:UInt32 = 0x1 << 2
     let gameBorderCategory:UInt32 = 0x1 << 3
     
+    
     func spawnObjects() {
 
+        
         // randomize which object to appear
-        let randomIndex = Int(arc4random_uniform(UInt32(astroidArray.count)))
+        
+        let randomIndex = Int(arc4random_uniform(UInt32(newWeighedAstriodArray.count)))
+        
 
-        let sprite = SKSpriteNode(imageNamed: String(astroidNameArray[randomIndex]))
+
+        let sprite = SKSpriteNode(imageNamed: String(newWeighedAstriodArray[randomIndex]))
         
         // assign a name for easier logic handling later
-        sprite.name = String(astroidNameArray[randomIndex])
+        sprite.name = String(newWeighedAstriodArray[randomIndex])
         
         // for collision
         sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
@@ -93,6 +107,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         /* set timer */
         _ = NSTimer.scheduledTimerWithTimeInterval(fallTempo, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
+        
+        /* Preparing weighted Array */
+
+        for j in 0 ... astroidWeightArray.count-1 {
+            for _ in 0 ... astroidWeightArray[j]-1 {
+
+                newWeighedAstriodArray.append(String(astroidNameArray[j]))
+            }
+
+        }
+        
+        print(newWeighedAstriodArray)
+        
+        /* prepare hearts and score */
+
+
+        for i in 1 ... totalHeartNumber {
+            let heartScoreSprite = SKSpriteNode(imageNamed:"heart")
+            heartScoreSprite.size = CGSize(width: 40, height: 40)
+            heartScoreSprite.position.x = 420 + CGFloat(i * 50)  /*   next is 185 */
+            heartScoreSprite.position.y = 710
+            heartScoreSprite.name = "heartScore" + String(i)
+            heartScoreArray.append(heartScoreSprite)
+            self.addChild(heartScoreSprite)
+        }
+        
         
         /* add ground with frame */
         let gameBorder = SKNode()
@@ -145,11 +185,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // smallDogSprite.position.x = location.x
             }
             
-//            sprite.xScale = 0.5
-//            sprite.yScale = 0.5
-//            sprite.position = location
-            
-            
         }
     }
     
@@ -171,21 +206,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if (firstBody.isEqual(tmpBody)) {
-            // do nothing?
+            // do nothing? cause this one has touched before
             
         } else {
-            tmpBody = firstBody
+
             print((firstBody.node?.name)! + " touched " + (secondBody.node?.name)! +  " ")
             if secondBody.node?.name == "smallDog" {
-                score++
-                viewController!.labelScore.text = "分數：" + String(score)
+                
+                /* For heart counting */
+                if (firstBody.isEqual(tmpBody1)) {
+                    // do nothing? cause this one has touched HEART before
+                } else {
+                
+                if firstBody.node?.name == "poison" {
+                    if heartLeft >= 0 {
+                        
+                        var tmpNode = SKNode()
+                        tmpNode = self.childNodeWithName("heartScore" + String(heartLeft))!
+                        var tmpNodeArray: [SKNode] = []
+                        tmpNodeArray.append(tmpNode)
+                        self.removeChildrenInArray(tmpNodeArray)
+                        tmpBody1 = firstBody
+                    
+                        heartLeft--
+                    } else {
+                        viewController.labelDie.hidden = false
+                    }
+                    print(heartLeft)
+                } else if firstBody.node?.name == "lo" {
+                    viewController.labelDie.hidden = false
+                    
+                } else if firstBody.node?.name == "bananas" {
+                    score++
+                    viewController!.updateScore(score)
+                }
+                    
+                
+                }
             } else if secondBody.node?.name == "gameBorder" {
                 var tmpNode = SKNode()
                 tmpNode = (firstBody.node)!
                 tmpNode.removeChildrenInArray([tmpNode])
+                tmpNode.removeFromParent()
+
             }
             
-            print(score)
 
             
         }

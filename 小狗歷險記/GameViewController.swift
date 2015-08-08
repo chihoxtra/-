@@ -13,13 +13,17 @@ class GameViewController: UIViewController {
 
     var currentGame: GameScene!
     
-    @IBOutlet weak var imageSmallDog: UIImageView!
+    @IBOutlet weak var labelDie: UILabel!
     
+    @IBOutlet weak var imageSmallDog: UIImageView!
+
     @IBOutlet weak var labelScore: UILabel!
     
     func updateScore(s: Int) {
         labelScore.text = "分數: " + String(s)
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

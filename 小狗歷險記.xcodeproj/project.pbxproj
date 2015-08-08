@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7E0392171B75FF39000053DC /* heart in Resources */ = {isa = PBXBuildFile; fileRef = 7E0392161B75FF39000053DC /* heart */; };
+		7E0392171B75FF39000053DC /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0392161B75FF39000053DC /* heart.png */; };
 		7E4968981B70ADD400E34E94 /* lo in Resources */ = {isa = PBXBuildFile; fileRef = 7E4968971B70ADD400E34E94 /* lo */; };
 		7E5259D71B74A2D900478C41 /* bananas in Resources */ = {isa = PBXBuildFile; fileRef = 7E5259D61B74A2D900478C41 /* bananas */; };
 		7EE506C61B6E2562006FB635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE506C51B6E2562006FB635 /* AppDelegate.swift */; };
@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7E0392161B75FF39000053DC /* heart */ = {isa = PBXFileReference; lastKnownFileType = file; path = heart; sourceTree = "<group>"; };
+		7E0392161B75FF39000053DC /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		7E4968971B70ADD400E34E94 /* lo */ = {isa = PBXFileReference; lastKnownFileType = file; path = lo; sourceTree = "<group>"; };
 		7E5259D61B74A2D900478C41 /* bananas */ = {isa = PBXFileReference; lastKnownFileType = file; path = bananas; sourceTree = "<group>"; };
 		7EE506C21B6E2562006FB635 /* 小狗歷險記.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "小狗歷險記.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,10 +76,10 @@
 				7EE506CB1B6E2562006FB635 /* GameViewController.swift */,
 				7EE506CD1B6E2562006FB635 /* Main.storyboard */,
 				7EE506D01B6E2562006FB635 /* Assets.xcassets */,
-				7E0392161B75FF39000053DC /* heart */,
-				7EE506E31B6F6C50006FB635 /* astroid */,
+				7E0392161B75FF39000053DC /* heart.png */,
 				7E4968971B70ADD400E34E94 /* lo */,
 				7E5259D61B74A2D900478C41 /* bananas */,
+				7EE506E31B6F6C50006FB635 /* astroid */,
 				7EE506DF1B6E2998006FB635 /* poison */,
 				7EE506DD1B6E2921006FB635 /* smallDog */,
 				7EE506D21B6E2562006FB635 /* LaunchScreen.storyboard */,
@@ -150,7 +150,7 @@
 				7EE506E01B6E2998006FB635 /* poison in Resources */,
 				7EE506D41B6E2562006FB635 /* LaunchScreen.storyboard in Resources */,
 				7EE506E41B6F6C50006FB635 /* astroid in Resources */,
-				7E0392171B75FF39000053DC /* heart in Resources */,
+				7E0392171B75FF39000053DC /* heart.png in Resources */,
 				7EE506D11B6E2562006FB635 /* Assets.xcassets in Resources */,
 				7EE506CF1B6E2562006FB635 /* Main.storyboard in Resources */,
 				7EE506DE1B6E2921006FB635 /* smallDog in Resources */,
