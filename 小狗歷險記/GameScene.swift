@@ -9,17 +9,14 @@
 import SpriteKit
 
 
-
-
-
-var smallDogSprite: SKSpriteNode!
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var smallDogSprite: SKSpriteNode!
     
     var astroidArray: [String:UIImage] = [
         "bananas" : UIImage(named: "bananas")!,
         "poison" : UIImage(named: "poison")!,
+        "heart" : UIImage(named: "heart")!,
         "astroid" : UIImage(named: "astroid")!,
         "lo" : UIImage(named: "lo")!
     ]
@@ -48,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //init categoryBitMask for colllision:
     let astroidsCategory:UInt32 = 0x1 << 1
     let smallDogCategory:UInt32 = 0x1 << 2
+    let gameBorderCategory:UInt32 = 0x1 << 3
     
     func spawnObjects() {
 
@@ -70,10 +68,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         
         // calculate the horizontial position wft screen width and marginal buffer value
-        let posX = Int(arc4random_uniform(UInt32(self.frame.size.width-300)))+200
+        let posX = Int(arc4random_uniform(UInt32(self.frame.size.width-700)))+300
         
-        sprite.xScale = 0.5
-        sprite.yScale = 0.5
+        sprite.xScale = 0.3
+        sprite.yScale = 0.3
         sprite.position = CGPoint(x: CGFloat(posX), y: ((self.frame.size.height)-150))
         
         //let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
@@ -90,11 +88,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
+        // enable physics
         self.physicsWorld.contactDelegate = self
 
         /* set timer */
         _ = NSTimer.scheduledTimerWithTimeInterval(fallTempo, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
         
+        /* add ground with frame */
+        let gameBorder = SKNode()
+        gameBorder.position = CGPointMake(0, 0)
+        gameBorder.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
+        gameBorder.physicsBody?.dynamic = true //This should be set to true
+        gameBorder.physicsBody?.affectedByGravity = false
+        gameBorder.physicsBody?.friction = 1
+        gameBorder.physicsBody?.categoryBitMask = gameBorderCategory
+        gameBorder.physicsBody?.contactTestBitMask = astroidsCategory
+        
+        gameBorder.name = "gameBorder"
+        self.addChild(gameBorder)
+        
+        // set small dog node info
         smallDogSprite = SKSpriteNode(imageNamed:"smallDog")
         
         // assign a name for easier logic handling later
@@ -157,16 +170,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        if firstBody.isEqual(tmpBody) {
+        if (firstBody.isEqual(tmpBody)) {
             // do nothing?
-            print((firstBody.node?.name)! + " touched again!")
+            
         } else {
             tmpBody = firstBody
-            print("new object: " + (firstBody.node?.name)! + " touched! ")
-            print(score++)
+            print((firstBody.node?.name)! + " touched " + (secondBody.node?.name)! +  " ")
+            if secondBody.node?.name == "smallDog" {
+                score++
+                viewController!.labelScore.text = "分數：" + String(score)
+            } else if secondBody.node?.name == "gameBorder" {
+                var tmpNode = SKNode()
+                tmpNode = (firstBody.node)!
+                tmpNode.removeChildrenInArray([tmpNode])
+            }
+            
+            print(score)
+
             
         }
-    
         
         
         if firstBody.categoryBitMask==0 && secondBody.categoryBitMask==1 {
