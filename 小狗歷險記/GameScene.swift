@@ -13,7 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var smallDogSprite: SKSpriteNode!
     
-    var astroidArray: [String:UIImage] = [
+    var objectsArray: [String:UIImage] = [
         "bananas" : UIImage(named: "bananas")!,
         "poison" : UIImage(named: "poison")!,
         "heart" : UIImage(named: "heart.png")!,
@@ -21,20 +21,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         "lo" : UIImage(named: "lo")!
     ]
     
-    var astroidWeightArray: [Int] = [
-        10,
-        5,
+    var objectsWeightArray: [Int] = [
         1,
-        5,
-        4
+        10,
+        10,
+        1,
+        1
     ]
     
-    var astroidNameArray:[String] = ["bananas", "poison", "heart", "astroid", "lo"]
+    var objectsNameArray:[String] = ["bananas", "poison", "heart", "astroid", "lo"]
 
-    var newWeighedAstriodArray: [String] = []
+    var newWeighedObjectsArray: [String] = []
     
-    // objects generation speed
-    var fallTempo = 1.0
+    // objects generation Interval
+    var generationInterval = 1.5
+    
+    // small dog movement velocity
+    var hVel = 250.0
+    
+    // g for objects to fall
+    var gVel = 250.0
     
     // score
     var score: Int = 0
@@ -52,28 +58,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     //init categoryBitMask for colllision:
-    let astroidsCategory:UInt32 = 0x1 << 1
+    let objectsCategory:UInt32 = 0x1 << 1
     let smallDogCategory:UInt32 = 0x1 << 2
     let gameBorderCategory:UInt32 = 0x1 << 3
     
+    func addHeart () {
+        if heartLeft < totalHeartNumber {
+                let heartScoreSprite = SKSpriteNode(imageNamed:"heart")
+                heartScoreSprite.size = CGSize(width: 40, height: 40)
+                heartScoreSprite.position.x = 420 + CGFloat((heartLeft+1) * 50)  /*   next is 185 */
+                heartScoreSprite.position.y = 710
+                heartLeft++
+                heartScoreSprite.name = "heartScore" + String(heartLeft)
+                heartScoreArray.append(heartScoreSprite)
+                self.addChild(heartScoreSprite)
+                print(heartLeft)
+
+        }
+    }
     
+    
+    // spawning new falling objects
     func spawnObjects() {
 
         
         // randomize which object to appear
         
-        let randomIndex = Int(arc4random_uniform(UInt32(newWeighedAstriodArray.count)))
+        let randomIndex = Int(arc4random_uniform(UInt32(newWeighedObjectsArray.count)))
         
 
 
-        let sprite = SKSpriteNode(imageNamed: String(newWeighedAstriodArray[randomIndex]))
+        let sprite = SKSpriteNode(imageNamed: String(newWeighedObjectsArray[randomIndex]))
         
         // assign a name for easier logic handling later
-        sprite.name = String(newWeighedAstriodArray[randomIndex])
+        sprite.name = String(newWeighedObjectsArray[randomIndex])
         
         // for collision
         sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
-        sprite.physicsBody?.categoryBitMask = astroidsCategory
+        sprite.physicsBody?.categoryBitMask = objectsCategory
         sprite.physicsBody?.contactTestBitMask = smallDogCategory
         // sprite.physicsBody?.collisionBitMask = smallDogCategory
         
@@ -89,7 +111,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sprite.position = CGPoint(x: CGFloat(posX), y: ((self.frame.size.height)-150))
         
         //let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-        let a = SKAction.moveToY(-100.00, duration: 2)
+        let a = SKAction.moveToY(-100.00, duration: 800/gVel)
         
         
         self.addChild(sprite)
@@ -106,19 +128,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
 
         /* set timer */
-        _ = NSTimer.scheduledTimerWithTimeInterval(fallTempo, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(generationInterval, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
         
         /* Preparing weighted Array */
 
-        for j in 0 ... astroidWeightArray.count-1 {
-            for _ in 0 ... astroidWeightArray[j]-1 {
+        for j in 0 ... objectsWeightArray.count-1 {
+            for _ in 0 ... objectsWeightArray[j]-1 {
 
-                newWeighedAstriodArray.append(String(astroidNameArray[j]))
+                newWeighedObjectsArray.append(String(objectsNameArray[j]))
             }
 
         }
-        
-        print(newWeighedAstriodArray)
         
         /* prepare hearts and score */
 
@@ -133,6 +153,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(heartScoreSprite)
         }
         
+//        /* add ground with frame */
+//        let cancelZone = SKNode()
+//        cancelZone.position = CGPointMake(0, 0)
+//        cancelZone.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.frame.width, height: 100.0), center: CGPoint(x: self.frame.midX, y: 0.0))
+//
+//        cancelZone.physicsBody?.dynamic = true //This should be set to true
+//        cancelZone.physicsBody?.affectedByGravity = false
+//        cancelZone.physicsBody?.friction = 1
+//        cancelZone.physicsBody?.categoryBitMask = gameBorderCategory
+//        cancelZone.physicsBody?.contactTestBitMask = objectsCategory
+//        cancelZone.hidden = false
+//        cancelZone.name = "cancelZone"
+//        self.addChild(cancelZone)
+
+        
         
         /* add ground with frame */
         let gameBorder = SKNode()
@@ -142,7 +177,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameBorder.physicsBody?.affectedByGravity = false
         gameBorder.physicsBody?.friction = 1
         gameBorder.physicsBody?.categoryBitMask = gameBorderCategory
-        gameBorder.physicsBody?.contactTestBitMask = astroidsCategory
+        gameBorder.physicsBody?.contactTestBitMask = objectsCategory
         
         gameBorder.name = "gameBorder"
         self.addChild(gameBorder)
@@ -161,12 +196,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //init smallDog
         smallDogSprite.physicsBody = SKPhysicsBody(rectangleOfSize: smallDogSprite.size)
         smallDogSprite.physicsBody?.categoryBitMask = smallDogCategory
-        smallDogSprite.physicsBody?.contactTestBitMask = astroidsCategory
+        smallDogSprite.physicsBody?.contactTestBitMask = objectsCategory
         
         // immune from collision actions
         smallDogSprite.physicsBody?.dynamic = false
 
-        // smallDogSprite.physicsBody?.collisionBitMask = astroidsCategory
+        // smallDogSprite.physicsBody?.collisionBitMask = objectsCategory
         
         self.addChild(smallDogSprite)
 
@@ -179,8 +214,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let location = touch.locationInNode(self)
 
-            if location.y < 200 {
-                let a = SKAction.moveToX(location.x, duration: 0.5)
+            if location.y < 400 {
+                let t = NSTimeInterval(abs(Double(smallDogSprite.position.x - location.x)) / hVel)
+                let a = SKAction.moveToX(location.x, duration: t)
                 smallDogSprite.runAction(SKAction.repeatActionForever(a))
                 // smallDogSprite.position.x = location.x
             }
@@ -210,7 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         } else {
 
-            print((firstBody.node?.name)! + " touched " + (secondBody.node?.name)! +  " ")
+
             if secondBody.node?.name == "smallDog" {
                 
                 /* For heart counting */
@@ -219,7 +255,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else {
                 
                 if firstBody.node?.name == "poison" {
-                    if heartLeft >= 0 {
+                    if heartLeft > 0 {
                         
                         var tmpNode = SKNode()
                         tmpNode = self.childNodeWithName("heartScore" + String(heartLeft))!
@@ -232,9 +268,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     } else {
                         viewController.labelDie.hidden = false
                     }
-                    print(heartLeft)
+
                 } else if firstBody.node?.name == "lo" {
                     viewController.labelDie.hidden = false
+
+                } else if firstBody.node?.name == "heart" {
+                    addHeart()
+                    tmpBody1 = firstBody
                     
                 } else if firstBody.node?.name == "bananas" {
                     score++
@@ -244,20 +284,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 }
             } else if secondBody.node?.name == "gameBorder" {
-                var tmpNode = SKNode()
-                tmpNode = (firstBody.node)!
-                tmpNode.removeChildrenInArray([tmpNode])
-                tmpNode.removeFromParent()
+                if (firstBody.node) != nil {
+                    var tmpNode = SKNode()
+                    tmpNode = (firstBody.node)!
+                    
+                    var tmpNodeArray: [SKNode] = []
+                    tmpNodeArray.append(tmpNode)
+                    self.removeChildrenInArray(tmpNodeArray)
 
             }
             
-
-            
         }
+        print("小孩數目 ： " + String(self.children.count))
         
         
-        if firstBody.categoryBitMask==0 && secondBody.categoryBitMask==1 {
+//        if firstBody.categoryBitMask==0 && secondBody.categoryBitMask==1 {
 //
+//        }
+ 
         }
     }
    
