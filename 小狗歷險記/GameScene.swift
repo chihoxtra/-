@@ -18,15 +18,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var smallDogSprite: SKSpriteNode!
     
-//    var objectsArray: [String:UIImage] = [
-//        "bananas" : UIImage(named: "bananas")!,
-//        "cherry" : UIImage(named: "cherry.png")!,
-//        "orange" : UIImage(named: "orange.png")!,
-//        "poison" : UIImage(named: "poison")!,
-//        "heart" : UIImage(named: "heart.png")!,
-//        "astroid" : UIImage(named: "astroid")!,
-//        "lo" : UIImage(named: "lo")!
-//    ]
+    var objectsArray: [String:UIImage] = [
+        "bananas" : UIImage(named: "bananas")!,
+        "cherry" : UIImage(named: "cherry.png")!,
+        "orange" : UIImage(named: "orange.png")!,
+        "poison" : UIImage(named: "poison")!,
+        "heart" : UIImage(named: "heart.png")!,
+        "astroid" : UIImage(named: "astroid")!,
+        "lo" : UIImage(named: "lo")!
+    ]
     
     var objectsWeightArray: [Int] = [
         10,
@@ -57,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // game level
     var gGameLevel = 1
-    var gLevelRaiseInterval:NSTimeInterval = NSTimeInterval(5.0)
+    var gLevelRaiseInterval:NSTimeInterval = NSTimeInterval(20.0)
     
     // score
     var score: Int = 0
@@ -111,6 +111,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // for collision
         sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
+        // sprite.physicsBody?.dynamic = true
+        // sprite.physicsBody?.allowsRotation = true
+        // sprite.physicsBody?.density = 0.3
         sprite.physicsBody?.categoryBitMask = objectsCategory
         sprite.physicsBody?.contactTestBitMask = smallDogCategory
         // sprite.physicsBody?.collisionBitMask = smallDogCategory
@@ -141,12 +144,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // start the game
         gameStatus = true
+        let bgcolor: UIColor = UIColor(red: (166/255), green: (255/255), blue: (254/255), alpha: 1.0)
+        self.backgroundColor = bgcolor
         
         // enable physics
         self.physicsWorld.contactDelegate = self
 
         /* set timer and objects spawn */
-        
         spawnMachine = NSTimer.scheduledTimerWithTimeInterval(generationInterval, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
         
         gameTimer = NSTimer.scheduledTimerWithTimeInterval(gLevelRaiseInterval, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
@@ -399,13 +403,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 5:
             gGameLevel++
             generationInterval *= 0.5
-            gVel -= 100
+            gVel += 100
             levelIncrement(generationInterval)
             
         case 6:
             gGameLevel++
             generationInterval *= 0.2
-            gVel -= 150
+            gVel += 400
             levelIncrement(generationInterval)
 
         default: break

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E0392171B75FF39000053DC /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0392161B75FF39000053DC /* heart.png */; };
-		7E4968981B70ADD400E34E94 /* lo in Resources */ = {isa = PBXBuildFile; fileRef = 7E4968971B70ADD400E34E94 /* lo */; };
+		7E3A0C731B77B1F500743C4C /* lo in Resources */ = {isa = PBXBuildFile; fileRef = 7E3A0C721B77B1F500743C4C /* lo */; };
 		7E5259D71B74A2D900478C41 /* bananas in Resources */ = {isa = PBXBuildFile; fileRef = 7E5259D61B74A2D900478C41 /* bananas */; };
 		7EDC2B831B7666F000EE8FC5 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDC2B811B7666EF00EE8FC5 /* orange.png */; };
 		7EDC2B841B7666F000EE8FC5 /* cherry.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDC2B821B7666F000EE8FC5 /* cherry.png */; };
@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		7E0392161B75FF39000053DC /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
-		7E4968971B70ADD400E34E94 /* lo */ = {isa = PBXFileReference; lastKnownFileType = file; path = lo; sourceTree = "<group>"; };
+		7E3A0C721B77B1F500743C4C /* lo */ = {isa = PBXFileReference; lastKnownFileType = file; path = lo; sourceTree = "<group>"; };
 		7E5259D61B74A2D900478C41 /* bananas */ = {isa = PBXFileReference; lastKnownFileType = file; path = bananas; sourceTree = "<group>"; };
 		7EDC2B811B7666EF00EE8FC5 /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
 		7EDC2B821B7666F000EE8FC5 /* cherry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cherry.png; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				7E0392161B75FF39000053DC /* heart.png */,
 				7EDC2B811B7666EF00EE8FC5 /* orange.png */,
 				7EDC2B821B7666F000EE8FC5 /* cherry.png */,
-				7E4968971B70ADD400E34E94 /* lo */,
+				7E3A0C721B77B1F500743C4C /* lo */,
 				7E5259D61B74A2D900478C41 /* bananas */,
 				7EE506E31B6F6C50006FB635 /* astroid */,
 				7EE506DF1B6E2998006FB635 /* poison */,
@@ -157,9 +157,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E4968981B70ADD400E34E94 /* lo in Resources */,
 				7EE506C81B6E2562006FB635 /* GameScene.sks in Resources */,
 				7EDC2B831B7666F000EE8FC5 /* orange.png in Resources */,
+				7E3A0C731B77B1F500743C4C /* lo in Resources */,
 				7EE506E01B6E2998006FB635 /* poison in Resources */,
 				7EE506D41B6E2562006FB635 /* LaunchScreen.storyboard in Resources */,
 				7EE506E41B6F6C50006FB635 /* astroid in Resources */,
