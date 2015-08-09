@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var newWeighedObjectsArray: [String] = []
     
     // objects generation Interval
-    var generationInterval:NSTimeInterval = NSTimeInterval(1.5)
+    var generationInterval:NSTimeInterval = NSTimeInterval(1.0)
     
     // small dog movement velocity
     var hVel = 250.0
@@ -56,7 +56,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameTimer : NSTimer = NSTimer()
     
     // game level
-    var gGameLevel = 0
+    var gGameLevel = 1
+    var gLevelRaiseInterval:NSTimeInterval = NSTimeInterval(20.0)
     
     // score
     var score: Int = 0
@@ -103,7 +104,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let randomIndex = Int(arc4random_uniform(UInt32(newWeighedObjectsArray.count)))
         
 
-
         let sprite = SKSpriteNode(imageNamed: String(newWeighedObjectsArray[randomIndex]))
         
         // assign a name for easier logic handling later
@@ -149,7 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         spawnMachine = NSTimer.scheduledTimerWithTimeInterval(generationInterval, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
         
-        gameTimer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
+        gameTimer = NSTimer.scheduledTimerWithTimeInterval(gLevelRaiseInterval, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
         
         /* Preparing weighted Array */
 
@@ -256,6 +256,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    /* Collison between objects occur */
     func didBeginContact(contact: SKPhysicsContact) {
         
         var firstBody: SKPhysicsBody
@@ -334,7 +335,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
-        print("小孩數目 ： " + String(self.children.count))
+//        print("小孩數目 ： " + String(self.children.count))
         
         
 //        if firstBody.categoryBitMask==0 && secondBody.categoryBitMask==1 {
@@ -344,24 +345,58 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
+    /* increase level!!! */
+    func levelIncrement(t: NSTimeInterval) {
+        
+        spawnMachine.invalidate()
+        viewController.labelLevel.text = "Level: " + String(gGameLevel)
+        
+//        UIView.animateWithDuration(0.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+//            // empty block
+//            }, completion: { (value: Bool) in
+//        
+//                UIView.animateWithDuration(2.0, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+//                    
+//                    self.viewController?.labelLevel.center.x = 150
+//                
+//                    }, completion: nil)
+//        
+//        
+//        })
+
+
+
+        spawnMachine = NSTimer.scheduledTimerWithTimeInterval(t, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
+        
+    }
+    
     func updateTimer() {
         switch gGameLevel {
-        case 0:
-            gGameLevel++
-            gVel += 50
         case 1:
             gGameLevel++
             gVel += 50
+            levelIncrement(generationInterval)
         case 2:
             gGameLevel++
-            generationInterval = NSTimeInterval(0.5)
+            gVel += 50
+            levelIncrement(generationInterval)
         case 3:
             gGameLevel++
-            generationInterval = NSTimeInterval(0.1)
+            generationInterval *= 0.5
+            levelIncrement(generationInterval)
         case 4:
             gGameLevel++
-            generationInterval = NSTimeInterval(0.05)
+            generationInterval *= 0.5
+            
+            levelIncrement(generationInterval)
+            
+        case 5:
+            gGameLevel++
+            generationInterval *= 0.5
             gVel -= 100
+            levelIncrement(generationInterval)
+
         default: break
         }
     }

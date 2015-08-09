@@ -13,6 +13,7 @@ class GameViewController: UIViewController {
 
     var currentGame: GameScene!
     
+    @IBOutlet weak var labelLevel: UILabel!
     @IBOutlet weak var labelDie: UILabel!
     
     @IBOutlet weak var imageSmallDog: UIImageView!

@@ -30,35 +30,46 @@
                                     <rect key="frame" x="154" y="513" width="71" height="78"/>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="分數：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymt-13-GEz">
-                                <rect key="frame" x="31" y="14" width="107" height="41"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="13" y="27" width="107" height="41"/>
-                                </variation>
-                            </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小狗已死" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tby-cW-8f3">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="149"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="-23" width="306" height="633"/>
+                                    <rect key="frame" x="36" y="140" width="306" height="346"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level : 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Go-cx-1Nd">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="1" green="0.79084281613889373" blue="0.11266512065256895" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="13" y="7" width="283" height="37"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="分數：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymt-13-GEz">
+                                <rect key="frame" x="31" y="14" width="107" height="41"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="13" y="40" width="107" height="41"/>
                                 </variation>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.53200072922578479" green="1" blue="0.52745349135940722" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.8863569602919994" green="0.92626167512010982" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="tby-cW-8f3"/>
+                                <exclude reference="1Go-cx-1Nd"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="tby-cW-8f3"/>
+                                <include reference="1Go-cx-1Nd"/>
                             </mask>
                         </variation>
                         <connections>
@@ -68,13 +79,14 @@
                     <connections>
                         <outlet property="imageSmallDog" destination="zWG-e4-I1F" id="UKv-st-fHm"/>
                         <outlet property="labelDie" destination="tby-cW-8f3" id="56w-jv-dpK"/>
+                        <outlet property="labelLevel" destination="1Go-cx-1Nd" id="pgo-9k-CJI"/>
                         <outlet property="labelScore" destination="ymt-13-GEz" id="4mR-CU-exJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="3FK-76-N9S"/>
             </objects>
-            <point key="canvasLocation" x="417" y="358.5"/>
+            <point key="canvasLocation" x="418" y="410"/>
         </scene>
     </scenes>
     <resources>
