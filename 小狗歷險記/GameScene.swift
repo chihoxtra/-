@@ -57,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // game level
     var gGameLevel = 1
-    var gLevelRaiseInterval:NSTimeInterval = NSTimeInterval(20.0)
+    var gLevelRaiseInterval:NSTimeInterval = NSTimeInterval(5.0)
     
     // score
     var score: Int = 0
@@ -218,11 +218,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
         
+
         for touch in touches {
             let location = touch.locationInNode(self)
-
-            if location.y < 400 {
-                let t = NSTimeInterval(abs(Double(smallDogSprite.position.x - location.x)) / hVel)
+            let absNumber = abs(Double(smallDogSprite.position.x - location.x))
+            
+            if (location.y < 400) && (hVel > 0) && (absNumber > 2){
+                let t = NSTimeInterval(absNumber/hVel)
+                
+                print(t)
+                
                 let a = SKAction.moveToX(location.x, duration: t)
                 smallDogSprite.runAction(SKAction.repeatActionForever(a))
                 // smallDogSprite.position.x = location.x
@@ -335,7 +340,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
-//        print("小孩數目 ： " + String(self.children.count))
+//       print("小孩數目 ： " + String(self.children.count))
         
         
 //        if firstBody.categoryBitMask==0 && secondBody.categoryBitMask==1 {
@@ -395,6 +400,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gGameLevel++
             generationInterval *= 0.5
             gVel -= 100
+            levelIncrement(generationInterval)
+            
+        case 6:
+            gGameLevel++
+            generationInterval *= 0.2
+            gVel -= 150
             levelIncrement(generationInterval)
 
         default: break
