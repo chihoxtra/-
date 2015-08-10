@@ -13,6 +13,9 @@ class GameViewController: UIViewController {
 
     var currentGame: GameScene!
     
+    var gameStarted = false
+    
+    
     @IBOutlet weak var labelLevel: UILabel!
     @IBOutlet weak var labelDie: UILabel!
     
@@ -20,17 +23,46 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var labelScore: UILabel!
     
+    @IBOutlet weak var viewSub: UIView!
+    
     func updateScore(s: Int) {
+        
         labelScore.text = "分數: " + String(s)
     }
-    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        if let scene = GameScene(fileNamed:"GameScene") {
+//            
+//            // Configure the view.
+//            let skView = self.view as! SKView
+//            skView.showsFPS = false
+//            skView.showsNodeCount = true
+//            
+//            
+//            /* Sprite Kit applies additional optimizations to improve rendering performance */
+//            skView.ignoresSiblingOrder = true
+//            
+//            /* Set the scale mode to scale to fit the window */
+//            scene.size = skView.bounds.size
+//            scene.scaleMode = .AspectFill
+//            
+//            /* Game Scene will be run after the presentation */
+//            skView.presentScene(scene)
+//            
+//            currentGame = scene
+//            scene.viewController = self
+//            
+//        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if gameStarted == false {
         if let scene = GameScene(fileNamed:"GameScene") {
-            
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -40,14 +72,14 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
+            scene.size = skView.bounds.size
             scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
-            /* Game Scene will be run after the presentation */
-            
             currentGame = scene
             scene.viewController = self
-            
+        }
+            gameStarted = true
         }
     }
 

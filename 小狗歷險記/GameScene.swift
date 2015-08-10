@@ -12,11 +12,31 @@ class GameOverScene: SKScene {
     
 }
 
+
+// Class defining Game Level Details
+class GameLevelDetails {
+    var level:Int = 1
+    var spawnInterval:NSTimeInterval = 0.0
+    var gravity:CGVector = CGVectorMake(0.0, -0.5)
+    var scoreNeededforNextLevel:Int = 0
+    var gameBackgroundName = "background1.png"
+    
+    init(levelNumber: Int, objectSpawnInterval: NSTimeInterval, gravity: CGVector, scoreNeededforNextLevel: Int, backgroundImageName: String) {
+        self.level = levelNumber
+        self.spawnInterval = objectSpawnInterval
+        self.gravity = gravity
+        self.scoreNeededforNextLevel = scoreNeededforNextLevel
+        self.gameBackgroundName = backgroundImageName
+    }
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameStatus: Bool = false
     
     var smallDogSprite: SKSpriteNode!
+    
+    var backgroundSprite: SKSpriteNode! = nil
     
     var objectsArray: [String:UIImage] = [
         "bananas" : UIImage(named: "bananas")!,
@@ -24,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         "orange" : UIImage(named: "orange.png")!,
         "poison" : UIImage(named: "poison")!,
         "heart" : UIImage(named: "heart.png")!,
-        "astroid" : UIImage(named: "astroid")!,
+        "astroid1" : UIImage(named: "astroid1")!,
         "lo" : UIImage(named: "lo")!
     ]
     
@@ -38,12 +58,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         1
     ]
     
-    var objectsNameArray:[String] = ["bananas", "cherry", "orange", "poison", "heart", "astroid", "lo"]
+    var objectsNameArray:[String] = ["bananas", "cherry", "orange", "poison", "heart", "astroid1", "lo"]
 
     var newWeighedObjectsArray: [String] = []
     
     // objects generation Interval
-    var generationInterval:NSTimeInterval = NSTimeInterval(1.0)
+    var generationInterval:NSTimeInterval = NSTimeInterval(1.5)
     
     // small dog movement velocity
     var hVel = 250.0
@@ -56,12 +76,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameTimer : NSTimer = NSTimer()
     
     // game level
-    var gGameLevel = 1
-    var gLevelRaiseInterval:NSTimeInterval = NSTimeInterval(20.0)
+
+    var gLevelCheckInterval:NSTimeInterval = NSTimeInterval(0.5)
+    var gCurrentGameObj:GameLevelDetails = GameLevelDetails(levelNumber: 0, objectSpawnInterval: 0.0, gravity: CGVector(dx: 0.0, dy: 0.0), scoreNeededforNextLevel: 0, backgroundImageName: "background1.png")
+    var allGameLevelObj:[GameLevelDetails] = []
     
     // score
-    var score: Int = 0
-    var scoreFlag: Bool = false
+    var gscore: Int = 0
     var totalHeartNumber = 5
     var heartLeft = 5
     var heartScoreArray = [SKSpriteNode()]
@@ -78,6 +99,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let objectsCategory:UInt32 = 0x1 << 1
     let smallDogCategory:UInt32 = 0x1 << 2
     let gameBorderCategory:UInt32 = 0x1 << 3
+    let backgroundImageCategory:UInt32 = 0x1 << 4
+    
+    func changeBackgroundImage(imageName: String) // Change background image
+    {
+
+        let background = SKSpriteNode(imageNamed: imageName)
+        background.name = "background"
+            
+        // self.viewController?.view.sizeToFit()
+        background.size = self.size
+        background.position.x = self.size.width/2
+        background.position.y = self.size.height/2
+        background.zPosition = -1
+        backgroundSprite = background
+            
+        self.addChild(background)
+        
+
+    }
+    
     
     func addHeart () {
         if heartLeft < totalHeartNumber {
@@ -89,7 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 heartScoreSprite.name = "heartScore" + String(heartLeft)
                 heartScoreArray.append(heartScoreSprite)
                 self.addChild(heartScoreSprite)
-                print(heartLeft)
+
 
         }
     }
@@ -97,7 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // spawning new falling objects
     func spawnObjects() {
-
+        self.viewController?.viewSub
         
         // randomize which object to appear
         
@@ -111,9 +152,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // for collision
         sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.size)
-        // sprite.physicsBody?.dynamic = true
-        // sprite.physicsBody?.allowsRotation = true
-        // sprite.physicsBody?.density = 0.3
+        
+        if (gCurrentGameObj.level > 4 || sprite.name == "astroid1") { /* applies to astriods and higher level objects only */
+            sprite.physicsBody?.dynamic = true
+            sprite.physicsBody?.allowsRotation = true
+            sprite.physicsBody?.density = 10
+        }
+        
         sprite.physicsBody?.categoryBitMask = objectsCategory
         sprite.physicsBody?.contactTestBitMask = smallDogCategory
         // sprite.physicsBody?.collisionBitMask = smallDogCategory
@@ -123,37 +168,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         
         // calculate the horizontial position wft screen width and marginal buffer value
-        let posX = Int(arc4random_uniform(UInt32(self.frame.size.width-700)))+300
+        let posX = Int(arc4random_uniform(UInt32(self.frame.size.width)-75))+30
         
         sprite.xScale = 0.3
         sprite.yScale = 0.3
         sprite.position = CGPoint(x: CGFloat(posX), y: ((self.frame.size.height)-150))
-        
-        let a = SKAction.moveToY(-100.00, duration: 800/gVel)
-        
+    
+        if sprite.position.x > 300 || sprite.position.x < 30 {
+        print(sprite.position.x)
+        }
         
         self.addChild(sprite)
-        
-        sprite.runAction(SKAction.repeatActionForever(a), withKey: "falling")
+
         
     }
     
     /* Almost like Init() */
     override func didMoveToView(view: SKView) {
+        
+        
         /* Setup your scene here */
         
         // start the game
         gameStatus = true
-        let bgcolor: UIColor = UIColor(red: (166/255), green: (255/255), blue: (254/255), alpha: 1.0)
-        self.backgroundColor = bgcolor
+
+        // Initilizing Game Levels
+        allGameLevelObj = [
+            GameLevelDetails(levelNumber: 1, objectSpawnInterval: NSTimeInterval(1.5), gravity: CGVectorMake(0, -2.0), scoreNeededforNextLevel: 10, backgroundImageName: "background1.png"),
+            
+            GameLevelDetails(levelNumber: 2, objectSpawnInterval: NSTimeInterval(1.3), gravity: CGVectorMake(0, -3.5), scoreNeededforNextLevel: 20, backgroundImageName: "background2.png"),
+            
+            GameLevelDetails(levelNumber: 3, objectSpawnInterval: NSTimeInterval(1.0), gravity: CGVectorMake(0, -4.0), scoreNeededforNextLevel: 30, backgroundImageName: "background3.png"),
+            
+            GameLevelDetails(levelNumber: 4, objectSpawnInterval: NSTimeInterval(0.8), gravity: CGVectorMake(0, -5.0), scoreNeededforNextLevel: 40, backgroundImageName: "background4.png"),
+            
+            GameLevelDetails(levelNumber: 5, objectSpawnInterval: NSTimeInterval(0.6), gravity: CGVectorMake(0, -7.0), scoreNeededforNextLevel: 50, backgroundImageName: "background5.png"),
+            
+            GameLevelDetails(levelNumber: 6, objectSpawnInterval: NSTimeInterval(0.2), gravity: CGVectorMake(0, -10.0), scoreNeededforNextLevel: 60, backgroundImageName: "background6.png"),
+            
+            GameLevelDetails(levelNumber: 7, objectSpawnInterval: NSTimeInterval(0.1), gravity: CGVectorMake(0, -20.0), scoreNeededforNextLevel: 100, backgroundImageName: "background6.png")  /* Level dummy */
+        
+        ]
+        
+        gCurrentGameObj = allGameLevelObj[0]
+        
         
         // enable physics
         self.physicsWorld.contactDelegate = self
-
+        physicsWorld.gravity = gCurrentGameObj.gravity
+        
+        // update background image
+        changeBackgroundImage("background1.png")
+        
+        
         /* set timer and objects spawn */
         spawnMachine = NSTimer.scheduledTimerWithTimeInterval(generationInterval, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
         
-        gameTimer = NSTimer.scheduledTimerWithTimeInterval(gLevelRaiseInterval, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
+        gameTimer = NSTimer.scheduledTimerWithTimeInterval(gLevelCheckInterval, target: self, selector: Selector("updateTimer"), userInfo: nil, repeats: true)
         
         /* Preparing weighted Array */
 
@@ -171,8 +242,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for i in 1 ... totalHeartNumber {
             let heartScoreSprite = SKSpriteNode(imageNamed:"heart")
             heartScoreSprite.size = CGSize(width: 40, height: 40)
-            heartScoreSprite.position.x = 420 + CGFloat(i * 50)  /*   next is 185 */
-            heartScoreSprite.position.y = 710
+            heartScoreSprite.position.x = 90 + CGFloat(i * 50)  /*   next is 185 */
+            heartScoreSprite.position.y = 610
             heartScoreSprite.name = "heartScore" + String(i)
             heartScoreArray.append(heartScoreSprite)
             self.addChild(heartScoreSprite)
@@ -201,7 +272,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         smallDogSprite.xScale = 0.8
         smallDogSprite.yScale = 0.8
-        smallDogSprite.position.x = 510.0
+        smallDogSprite.position.x = self.frame.width/2
         smallDogSprite.position.y = 120.0
         
         //init smallDog
@@ -215,6 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // smallDogSprite.physicsBody?.collisionBitMask = objectsCategory
         
         self.addChild(smallDogSprite)
+
 
     }
     
@@ -230,7 +302,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (location.y < 400) && (hVel > 0) && (absNumber > 2){
                 let t = NSTimeInterval(absNumber/hVel)
                 
-                print(t)
                 
                 let a = SKAction.moveToX(location.x, duration: t)
                 smallDogSprite.runAction(SKAction.repeatActionForever(a))
@@ -323,15 +394,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                         addHeart()
                         tmpBody1 = firstBody
-                    case "astroid"?:
+                    case "astroid1"?:
                         /* Just bounce off */
                         tmpBody1 = firstBody
+
                     default:
                         tmpBody1 = firstBody
                         removeSprite (firstBody)
                         
-                        score++
-                        viewController!.updateScore(score)
+                        gscore++
+                        viewController!.updateScore(gscore)
                     }
                     /* end of switch loop */
                     
@@ -342,6 +414,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     removeSprite (firstBody)
 
             }
+
             
         }
 //       print("小孩數目 ： " + String(self.children.count))
@@ -359,61 +432,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func levelIncrement(t: NSTimeInterval) {
         
         spawnMachine.invalidate()
-        viewController.labelLevel.text = "Level: " + String(gGameLevel)
+        viewController.labelLevel.text = "Level: " + String(gCurrentGameObj.level)
         
-//        UIView.animateWithDuration(0.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-//            // empty block
-//            }, completion: { (value: Bool) in
-//        
-//                UIView.animateWithDuration(2.0, delay: 0.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-//                    
-//                    self.viewController?.labelLevel.center.x = 150
-//                
-//                    }, completion: nil)
-//        
-//        
-//        })
-
-
-
         spawnMachine = NSTimer.scheduledTimerWithTimeInterval(t, target: self, selector: Selector("spawnObjects"), userInfo: nil, repeats: true)
         
     }
     
     func updateTimer() {
-        switch gGameLevel {
-        case 1:
-            gGameLevel++
-            gVel += 50
-            levelIncrement(generationInterval)
-        case 2:
-            gGameLevel++
-            gVel += 50
-            levelIncrement(generationInterval)
-        case 3:
-            gGameLevel++
-            generationInterval *= 0.5
-            levelIncrement(generationInterval)
-        case 4:
-            gGameLevel++
-            generationInterval *= 0.5
+        
+        // check if this is time to to update Levels
+        if (gCurrentGameObj.scoreNeededforNextLevel == gscore) && (gCurrentGameObj.level >= 1) {
+            physicsWorld.gravity = gCurrentGameObj.gravity
+            gCurrentGameObj = allGameLevelObj[gCurrentGameObj.level] /* level Index + 1 */
             
-            levelIncrement(generationInterval)
-            
-        case 5:
-            gGameLevel++
-            generationInterval *= 0.5
-            gVel += 100
-            levelIncrement(generationInterval)
-            
-        case 6:
-            gGameLevel++
-            generationInterval *= 0.2
-            gVel += 400
-            levelIncrement(generationInterval)
+            changeBackgroundImage(gCurrentGameObj.gameBackgroundName)
 
-        default: break
+            levelIncrement(gCurrentGameObj.spawnInterval)
         }
+        
+        
+
     }
    
 

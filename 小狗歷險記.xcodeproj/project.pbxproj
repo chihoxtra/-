@@ -10,8 +10,16 @@
 		7E0392171B75FF39000053DC /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0392161B75FF39000053DC /* heart.png */; };
 		7E3A0C731B77B1F500743C4C /* lo in Resources */ = {isa = PBXBuildFile; fileRef = 7E3A0C721B77B1F500743C4C /* lo */; };
 		7E5259D71B74A2D900478C41 /* bananas in Resources */ = {isa = PBXBuildFile; fileRef = 7E5259D61B74A2D900478C41 /* bananas */; };
+		7E8560301B79304A008E47EC /* poison in Resources */ = {isa = PBXBuildFile; fileRef = 7E85602F1B79304A008E47EC /* poison */; };
+		7ED6AD141B7930D300F49209 /* astroid1 in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6AD131B7930D300F49209 /* astroid1 */; };
+		7ED6AD161B79320200F49209 /* background5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6AD151B79320200F49209 /* background5.png */; };
+		7ED6AD181B79335E00F49209 /* background6.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6AD171B79335E00F49209 /* background6.png */; };
 		7EDC2B831B7666F000EE8FC5 /* orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDC2B811B7666EF00EE8FC5 /* orange.png */; };
 		7EDC2B841B7666F000EE8FC5 /* cherry.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDC2B821B7666F000EE8FC5 /* cherry.png */; };
+		7EDEF5B71B78E59500CBF78B /* background4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDEF5B31B78E59500CBF78B /* background4.png */; };
+		7EDEF5B81B78E59500CBF78B /* background2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDEF5B41B78E59500CBF78B /* background2.png */; };
+		7EDEF5B91B78E59500CBF78B /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDEF5B51B78E59500CBF78B /* background3.png */; };
+		7EDEF5BC1B78E5B100CBF78B /* background1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EDEF5BB1B78E5B100CBF78B /* background1.png */; };
 		7EE506C61B6E2562006FB635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE506C51B6E2562006FB635 /* AppDelegate.swift */; };
 		7EE506C81B6E2562006FB635 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506C71B6E2562006FB635 /* GameScene.sks */; };
 		7EE506CA1B6E2562006FB635 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE506C91B6E2562006FB635 /* GameScene.swift */; };
@@ -20,16 +28,22 @@
 		7EE506D11B6E2562006FB635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506D01B6E2562006FB635 /* Assets.xcassets */; };
 		7EE506D41B6E2562006FB635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506D21B6E2562006FB635 /* LaunchScreen.storyboard */; };
 		7EE506DE1B6E2921006FB635 /* smallDog in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506DD1B6E2921006FB635 /* smallDog */; };
-		7EE506E01B6E2998006FB635 /* poison in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506DF1B6E2998006FB635 /* poison */; };
-		7EE506E41B6F6C50006FB635 /* astroid in Resources */ = {isa = PBXBuildFile; fileRef = 7EE506E31B6F6C50006FB635 /* astroid */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7E0392161B75FF39000053DC /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		7E3A0C721B77B1F500743C4C /* lo */ = {isa = PBXFileReference; lastKnownFileType = file; path = lo; sourceTree = "<group>"; };
 		7E5259D61B74A2D900478C41 /* bananas */ = {isa = PBXFileReference; lastKnownFileType = file; path = bananas; sourceTree = "<group>"; };
+		7E85602F1B79304A008E47EC /* poison */ = {isa = PBXFileReference; lastKnownFileType = file; path = poison; sourceTree = "<group>"; };
+		7ED6AD131B7930D300F49209 /* astroid1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = astroid1; sourceTree = "<group>"; };
+		7ED6AD151B79320200F49209 /* background5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background5.png; sourceTree = "<group>"; };
+		7ED6AD171B79335E00F49209 /* background6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background6.png; sourceTree = "<group>"; };
 		7EDC2B811B7666EF00EE8FC5 /* orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange.png; sourceTree = "<group>"; };
 		7EDC2B821B7666F000EE8FC5 /* cherry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cherry.png; sourceTree = "<group>"; };
+		7EDEF5B31B78E59500CBF78B /* background4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background4.png; sourceTree = "<group>"; };
+		7EDEF5B41B78E59500CBF78B /* background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2.png; sourceTree = "<group>"; };
+		7EDEF5B51B78E59500CBF78B /* background3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background3.png; sourceTree = "<group>"; };
+		7EDEF5BB1B78E5B100CBF78B /* background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background1.png; sourceTree = "<group>"; };
 		7EE506C21B6E2562006FB635 /* 小狗歷險記.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "小狗歷險記.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE506C51B6E2562006FB635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7EE506C71B6E2562006FB635 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -40,8 +54,6 @@
 		7EE506D31B6E2562006FB635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EE506D51B6E2562006FB635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EE506DD1B6E2921006FB635 /* smallDog */ = {isa = PBXFileReference; lastKnownFileType = file; path = smallDog; sourceTree = "<group>"; };
-		7EE506DF1B6E2998006FB635 /* poison */ = {isa = PBXFileReference; lastKnownFileType = file; path = poison; sourceTree = "<group>"; };
-		7EE506E31B6F6C50006FB635 /* astroid */ = {isa = PBXFileReference; lastKnownFileType = file; path = astroid; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,13 +94,19 @@
 				7EE506D01B6E2562006FB635 /* Assets.xcassets */,
 				7E0392161B75FF39000053DC /* heart.png */,
 				7EDC2B811B7666EF00EE8FC5 /* orange.png */,
+				7ED6AD131B7930D300F49209 /* astroid1 */,
 				7EDC2B821B7666F000EE8FC5 /* cherry.png */,
 				7E3A0C721B77B1F500743C4C /* lo */,
+				7E85602F1B79304A008E47EC /* poison */,
 				7E5259D61B74A2D900478C41 /* bananas */,
-				7EE506E31B6F6C50006FB635 /* astroid */,
-				7EE506DF1B6E2998006FB635 /* poison */,
 				7EE506DD1B6E2921006FB635 /* smallDog */,
 				7EE506D21B6E2562006FB635 /* LaunchScreen.storyboard */,
+				7EDEF5BB1B78E5B100CBF78B /* background1.png */,
+				7EDEF5B41B78E59500CBF78B /* background2.png */,
+				7EDEF5B51B78E59500CBF78B /* background3.png */,
+				7EDEF5B31B78E59500CBF78B /* background4.png */,
+				7ED6AD151B79320200F49209 /* background5.png */,
+				7ED6AD171B79335E00F49209 /* background6.png */,
 				7EE506D51B6E2562006FB635 /* Info.plist */,
 			);
 			path = "小狗歷險記";
@@ -159,13 +177,19 @@
 			files = (
 				7EE506C81B6E2562006FB635 /* GameScene.sks in Resources */,
 				7EDC2B831B7666F000EE8FC5 /* orange.png in Resources */,
+				7E8560301B79304A008E47EC /* poison in Resources */,
 				7E3A0C731B77B1F500743C4C /* lo in Resources */,
-				7EE506E01B6E2998006FB635 /* poison in Resources */,
+				7EDEF5B71B78E59500CBF78B /* background4.png in Resources */,
+				7ED6AD161B79320200F49209 /* background5.png in Resources */,
 				7EE506D41B6E2562006FB635 /* LaunchScreen.storyboard in Resources */,
-				7EE506E41B6F6C50006FB635 /* astroid in Resources */,
+				7EDEF5B91B78E59500CBF78B /* background3.png in Resources */,
+				7ED6AD141B7930D300F49209 /* astroid1 in Resources */,
 				7E0392171B75FF39000053DC /* heart.png in Resources */,
+				7ED6AD181B79335E00F49209 /* background6.png in Resources */,
+				7EDEF5BC1B78E5B100CBF78B /* background1.png in Resources */,
 				7EE506D11B6E2562006FB635 /* Assets.xcassets in Resources */,
 				7EDC2B841B7666F000EE8FC5 /* cherry.png in Resources */,
+				7EDEF5B81B78E59500CBF78B /* background2.png in Resources */,
 				7EE506CF1B6E2562006FB635 /* Main.storyboard in Resources */,
 				7EE506DE1B6E2921006FB635 /* smallDog in Resources */,
 				7E5259D71B74A2D900478C41 /* bananas in Resources */,
