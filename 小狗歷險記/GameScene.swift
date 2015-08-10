@@ -42,6 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         "bananas" : UIImage(named: "bananas")!,
         "cherry" : UIImage(named: "cherry.png")!,
         "orange" : UIImage(named: "orange.png")!,
+        "carrot" : UIImage(named: "carrot")!,
         "poison" : UIImage(named: "poison")!,
         "heart" : UIImage(named: "heart.png")!,
         "astroid1" : UIImage(named: "astroid1")!,
@@ -52,13 +53,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         10,
         10,
         10,
-        2,
-        1,
+        5,
+        20,
+        10,
         5,
         1
     ]
     
-    var objectsNameArray:[String] = ["bananas", "cherry", "orange", "poison", "heart", "astroid1", "lo"]
+    var objectsNameArray:[String] = ["bananas", "cherry", "orange", "carrot", "poison", "heart", "astroid1", "lo"]
 
     var newWeighedObjectsArray: [String] = []
     
@@ -84,7 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // score
     var gscore: Int = 0
     var totalHeartNumber = 5
-    var heartLeft = 5
+    var heartLeft = 0
     var heartScoreArray = [SKSpriteNode()]
     
     // tmp body node, sorry need this to avoid double counting action
@@ -100,6 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let smallDogCategory:UInt32 = 0x1 << 2
     let gameBorderCategory:UInt32 = 0x1 << 3
     let backgroundImageCategory:UInt32 = 0x1 << 4
+    let heartScoreCategory:UInt32 = 0x1 << 5
     
     func changeBackgroundImage(imageName: String) // Change background image
     {
@@ -120,17 +123,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    func addHeart () {
+    func addHeart (n: Int) {
         if heartLeft < totalHeartNumber {
+            for _ in 1...n {
                 let heartScoreSprite = SKSpriteNode(imageNamed:"heart")
-                heartScoreSprite.size = CGSize(width: 40, height: 40)
-                heartScoreSprite.position.x = 420 + CGFloat((heartLeft+1) * 50)  /*   next is 185 */
-                heartScoreSprite.position.y = 710
+                heartScoreSprite.size = CGSize(width: 30, height: 30)
+                heartScoreSprite.position.x = 80 + CGFloat((heartLeft+1) * 40)
+                heartScoreSprite.position.y = self.frame.height - 60
                 heartLeft++
                 heartScoreSprite.name = "heartScore" + String(heartLeft)
                 heartScoreArray.append(heartScoreSprite)
                 self.addChild(heartScoreSprite)
-
+            }
 
         }
     }
@@ -237,17 +241,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         /* prepare hearts and score */
+        
+        addHeart(totalHeartNumber)
 
-
-        for i in 1 ... totalHeartNumber {
-            let heartScoreSprite = SKSpriteNode(imageNamed:"heart")
-            heartScoreSprite.size = CGSize(width: 40, height: 40)
-            heartScoreSprite.position.x = 90 + CGFloat(i * 50)  /*   next is 185 */
-            heartScoreSprite.position.y = 610
-            heartScoreSprite.name = "heartScore" + String(i)
-            heartScoreArray.append(heartScoreSprite)
-            self.addChild(heartScoreSprite)
-        }
+//        for i in 1 ... totalHeartNumber {
+//            let heartScoreSprite = SKSpriteNode(imageNamed:"heart")
+//            heartScoreSprite.size = CGSize(width: 30, height: 30)
+//            heartScoreSprite.position.x = 80 + CGFloat(i * 40)
+//            heartScoreSprite.position.y = self.frame.height - 60
+//            heartScoreSprite.name = "heartScore" + String(i)
+//            heartScoreArray.append(heartScoreSprite)
+//            self.addChild(heartScoreSprite)
+//        }
         
 
 
@@ -392,7 +397,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     case "heart"?:
                         removeSprite (firstBody)
                         
-                        addHeart()
+                        addHeart(1)
                         tmpBody1 = firstBody
                     case "astroid1"?:
                         /* Just bounce off */
