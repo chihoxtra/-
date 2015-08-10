@@ -54,8 +54,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         10,
         10,
         5,
-        20,
-        10,
+        5,
+        2,
         5,
         1
     ]
@@ -337,6 +337,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.removeAllChildren()
         self.removeAllActions()
+        
+        changeBackgroundImage("lo_haha.jpg")
+        
         viewController.labelDie.hidden = false
         
     }

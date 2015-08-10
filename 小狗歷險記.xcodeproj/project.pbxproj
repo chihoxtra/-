@@ -10,6 +10,7 @@
 		7E0392171B75FF39000053DC /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0392161B75FF39000053DC /* heart.png */; };
 		7E3A0C731B77B1F500743C4C /* lo in Resources */ = {isa = PBXBuildFile; fileRef = 7E3A0C721B77B1F500743C4C /* lo */; };
 		7E5259D71B74A2D900478C41 /* bananas in Resources */ = {isa = PBXBuildFile; fileRef = 7E5259D61B74A2D900478C41 /* bananas */; };
+		7E83DFE11B794A0F00586FDF /* lo_haha.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E83DFE01B794A0F00586FDF /* lo_haha.jpg */; };
 		7E8560301B79304A008E47EC /* poison in Resources */ = {isa = PBXBuildFile; fileRef = 7E85602F1B79304A008E47EC /* poison */; };
 		7ED6AD141B7930D300F49209 /* astroid1 in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6AD131B7930D300F49209 /* astroid1 */; };
 		7ED6AD161B79320200F49209 /* background5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6AD151B79320200F49209 /* background5.png */; };
@@ -35,6 +36,7 @@
 		7E0392161B75FF39000053DC /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		7E3A0C721B77B1F500743C4C /* lo */ = {isa = PBXFileReference; lastKnownFileType = file; path = lo; sourceTree = "<group>"; };
 		7E5259D61B74A2D900478C41 /* bananas */ = {isa = PBXFileReference; lastKnownFileType = file; path = bananas; sourceTree = "<group>"; };
+		7E83DFE01B794A0F00586FDF /* lo_haha.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lo_haha.jpg; sourceTree = "<group>"; };
 		7E85602F1B79304A008E47EC /* poison */ = {isa = PBXFileReference; lastKnownFileType = file; path = poison; sourceTree = "<group>"; };
 		7ED6AD131B7930D300F49209 /* astroid1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = astroid1; sourceTree = "<group>"; };
 		7ED6AD151B79320200F49209 /* background5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background5.png; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				7EDEF5B31B78E59500CBF78B /* background4.png */,
 				7ED6AD151B79320200F49209 /* background5.png */,
 				7ED6AD171B79335E00F49209 /* background6.png */,
+				7E83DFE01B794A0F00586FDF /* lo_haha.jpg */,
 				7EE506D51B6E2562006FB635 /* Info.plist */,
 			);
 			path = "小狗歷險記";
@@ -196,6 +199,7 @@
 				7ED6AD1A1B793F6500F49209 /* carrot.png in Resources */,
 				7EE506CF1B6E2562006FB635 /* Main.storyboard in Resources */,
 				7EE506DE1B6E2921006FB635 /* smallDog in Resources */,
+				7E83DFE11B794A0F00586FDF /* lo_haha.jpg in Resources */,
 				7E5259D71B74A2D900478C41 /* bananas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
